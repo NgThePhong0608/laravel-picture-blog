@@ -44,19 +44,6 @@ class ImageRequest extends FormRequest
             $data['file'] = $this->file->store($directory);
             $data['dimension'] = Image::getDimension($data['file']);
         }
-        if ($title = $data['title']){
-            $data['slug'] = $this->getSlug($title);
-        }
         return $data;
-    }
-
-    public function getSlug($title)
-    {
-        $slug = str($title)->slug();
-        $numSlugFound = Image::where('slug', 'regexp', "^" . $slug . "(-[0-9])?")->count();
-        if ($numSlugFound){
-            return $slug . "-" . $numSlugFound + 1;
-        }
-        return $slug;
     }
 }
