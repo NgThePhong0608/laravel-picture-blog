@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Image;
 use Database\Factories\ImageFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Image::factory(10)->create();
+        $images = Storage::allFiles('images');
+        foreach ($images as $image)
+        {
+            Image::factory()->create([
+                'file' => $image
+            ]);
+        }
     }
 }
