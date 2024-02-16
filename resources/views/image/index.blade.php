@@ -13,14 +13,16 @@
                         <a href="{{ $image->permalink() }}">
                             <img src="{{ $image->fileUrl() }}" alt="{{ $image->title }}"  class="card-img-top">
                         </a>
-                        <div class="photo-buttons">
-                            <div>
-                                <a class="btn btn-sm btn-info me-2" href="{{ $image->route('edit') }}">Edit</a>
-                                <x-form action="{{ $image->route('destroy') }}" method="DELETE">
-                                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Are you sure ?')">Delete</button>
-                                </x-form>
+                        @if(Auth::check() && Auth::user()->can('update', $image))
+                            <div class="photo-buttons">
+                                <div>
+                                    <a class="btn btn-sm btn-info me-2" href="{{ $image->route('edit') }}">Edit</a>
+                                    <x-form action="{{ $image->route('destroy') }}" method="DELETE">
+                                        <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Are you sure ?')">Delete</button>
+                                    </x-form>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             @endforeach

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Gate;
 
 class ImageController extends Controller
 {
+    public function __construct(){
+        $this->authorizeResource(Image::class);
+    }
     public function index(Request $request)
     {
         $images = Image::published()->latest()->paginate(3)->withQueryString();
@@ -34,7 +37,6 @@ class ImageController extends Controller
 
     public function edit(Image $image)
     {
-        $this->authorize('update', $image);
         return view('image.edit', compact('image'));
     }
 
@@ -46,7 +48,6 @@ class ImageController extends Controller
 
     public function destroy(Image $image)
     {
-        $this->authorize('delete', $image);
         $image->delete();
         return to_route('images.index')->with('message', 'Image has been remove successfully');
     }
