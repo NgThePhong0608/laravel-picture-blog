@@ -21,7 +21,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label" for="title">Title</label>
-                                <input class="form-control @error('file') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}">
+                                <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}">
                                 @error('title')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
