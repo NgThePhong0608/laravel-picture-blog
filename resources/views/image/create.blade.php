@@ -1,24 +1,40 @@
 <x-layout title="Upload new image">
-    <h1>Upload new image</h1>
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">Upload your photo</div>
 
-    <x-form action="{{ route('images.store') }}" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="file">File</label>
-            <input type="file" name="file" id="file">
-            @error('file')
-            <div>{{ $message }}</div>
-            @enderror
+                    <div class="card-body">
+                        <x-form action="{{ route('images.store') }}" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label" for="file">File</label>
+                                <input class="form-control @error('file') is-invalid @enderror" type="file" name="file" id="file">
+                                @error('file')
+                                    <x-alert type="danger">{{ $message }}</x-alert>
+                                @else
+                                    <div class="form-text">
+                                        You can only upload your photo in following types: jpg & png
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="title">Title</label>
+                                <input class="form-control @error('file') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}">
+                                @error('title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                                <a href="{{ route('images.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </x-form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="{{ old('title') }}">
-            @error('title')
-            <div>{{ $message }}</div>
-            @enderror
-        </div>
-
-        <button type="submit">Upload</button>
-    </x-form>
-
+    </div>
 </x-layout>
