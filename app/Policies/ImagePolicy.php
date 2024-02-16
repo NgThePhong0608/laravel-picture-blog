@@ -78,7 +78,7 @@ class ImagePolicy
      */
     public function restore(User $user, Image $image)
     {
-        //
+        return false;
     }
 
     /**
@@ -90,6 +90,6 @@ class ImagePolicy
      */
     public function forceDelete(User $user, Image $image)
     {
-        //
+        return false;
     }
 }
