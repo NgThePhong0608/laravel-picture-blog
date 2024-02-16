@@ -37,7 +37,7 @@ class ImageRequest extends FormRequest
 
     public function getData()
     {
-        $data = $this->validated() + ['user_id' => 1 ];//$this->user()->id];
+        $data = $this->validated() + ['user_id' => $this->user()->id];
         if ($this->has('file'))
         {
             $directory = Image::makeDirectory();
