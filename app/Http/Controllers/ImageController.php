@@ -34,7 +34,7 @@ class ImageController extends Controller
 
     public function edit(Image $image)
     {
-        $this->authorize('update-image', $image);
+        $this->authorize('update', $image);
         return view('image.edit', compact('image'));
     }
 
@@ -46,9 +46,7 @@ class ImageController extends Controller
 
     public function destroy(Image $image)
     {
-        if (Gate::denies('delete-image', $image)){
-            abort(403, "Access denied");
-        }
+        $this->authorize('delete', $image);
         $image->delete();
         return to_route('images.index')->with('message', 'Image has been remove successfully');
     }

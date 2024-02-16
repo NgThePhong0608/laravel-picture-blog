@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\PolicyForImage;
 use Illuminate\Support\Facades\Gate;
 use App\Enum\Role;
 use App\Models\Image;
@@ -16,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+//        Image::class => PolicyForImage::class
     ];
 
     /**
@@ -28,12 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('update-image', function (User $user, Image $image){
-            return $user->id === $image->user_id || $user->role === Role::Editor;
-        });
+//        Gate::define('update-image', [PolicyForImage::class, 'update']);
+//
+//        Gate::define('delete-image', [PolicyForImage::class, 'delete']);
 
-        Gate::define('delete-image', function (User $user, Image $image){
-            return $user->id === $image->user_id;
+        Gate::before(function ($user, $ability){
+            if ($user->role === Role::Admin){
+                return true;
+            }
         });
     }
 }
