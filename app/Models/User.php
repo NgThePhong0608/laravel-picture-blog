@@ -50,6 +50,18 @@ class User extends Authenticatable
         return $this->hasOne(Social::class)->withDefault(); //, 'user_id', '_id');
     }
 
+//    public function recentSocial(){
+//        return $this->hasOne(Social::class)->latestOfMany();
+//    }
+//
+//    public function oldestSocial(){
+//        return $this->hasOne(Social::class)->oldestOfMany();
+//    }
+//
+//    public function socialPriority(){
+//        return $this->hasOne(Social::class)->ofMany('priority', 'max');
+//    }
+
     public function getImagesCount()
     {
         $imagesCount = $this->images()->published()->count();
