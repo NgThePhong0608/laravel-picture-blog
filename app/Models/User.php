@@ -42,12 +42,46 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function updateSettings($data)
+    {
+        $this->updateSocialProfile($data['social']);
+    }
+
+    public function updateSocialProfile($social)
+    {
+//        if ($this->social()->exists()){
+//            $this->social()->update($social);
+//        }else{
+//            $this->social()->create($social);
+//        }
+        Social::updateOrCreate(
+            ['user_id' => $this->id],
+            $social
+        );
+    }
     public function images(){
         return $this->hasMany(Image::class);
     }
 
     public function social(){
         return $this->hasOne(Social::class)->withDefault(); //, 'user_id', '_id');
+    }
+
+    public function setting()
+    {
+        return $this->hasOne(Setting::class)->withDefault();
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->setting()->create([
+                "email_notification" => [
+                    "new_comment" => 1,
+                    "new_image" => 1
+                ]
+            ]);
+        });
     }
 
 //    public function recentSocial(){
