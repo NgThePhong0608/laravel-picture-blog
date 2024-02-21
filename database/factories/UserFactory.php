@@ -20,9 +20,9 @@ class UserFactory extends Factory
     {
         $this->faker->addProvider(new Address($this->faker));
         return [
-            'name' => fake()->name(),
-            'email' => $email = fake()->unique()->safeEmail(),
-            'username' => strstr($email, '@', true) . rand(100, 120),
+            'name' => $this->faker->name(),
+            'email' => $email = $this->faker->unique()->safeEmail(),
+            'username' => $this->generateUsername($email),
             'city' => rand(0, 1) === 0 ? null : $this->faker->city(),
             'country' => rand(0, 1) === 0 ? null : $this->faker->country(),
             'about_me' => rand(0, 1) === 0 ? null : $this->faker->text(),
@@ -30,6 +30,16 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
+
+    }
+
+    protected function generateUsername($email)
+    {
+        $username = strstr($email, '@', true);
+        if (!$username) {
+            $username = 'user' . rand(1000, 9999); // Generate a fallback username
+        }
+        return $username;
     }
 
     /**
