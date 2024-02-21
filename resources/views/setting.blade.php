@@ -120,12 +120,16 @@
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="options[disable_comments]"
-                                           id="disable_comments_no" value="0" checked>
+                                           id="disable_comments_no" value="0"
+                                           @if(old('options.disable_comments', $user->setting->disable_comments) == 0) checked @endif
+                                    >
                                     <label class="form-check-label" for="disable_comments_no">No</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="options[disable_comments]"
-                                           id="disable_comments_yes" value="1">
+                                           id="disable_comments_yes" value="1"
+                                           @if(old('options.disable_comments', $user->setting->disable_comments) == 1) checked @endif
+                                    >
                                     <label class="form-check-label" for="disable_comments_yes">Yes</label>
                                 </div>
                             </div>
@@ -135,12 +139,16 @@
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="options[moderate_comments]"
-                                           id="moderate_comments_no" value="0" checked>
+                                           id="moderate_comments_no" value="0"
+                                           @if(old('options.moderate_comments', $user->setting->moderate_comments) == 0) checked @endif
+                                    >
                                     <label class="form-check-label" for="moderate_comments_no">No</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="options[moderate_comments]"
-                                           id="moderate_comments_yes" value="1">
+                                           id="moderate_comments_yes" value="1"
+                                           @if(old('options.moderate_comments', $user->setting->moderate_comments) == 1) checked @endif
+                                    >
                                     <label class="form-check-label" for="moderate_comments_yes">Yes</label>
                                 </div>
                             </div>
@@ -151,7 +159,8 @@
                                 <input type="hidden" name="options[email_notification][new_comment]" value="0">
                                 <input class="form-check-input" type="checkbox"
                                        name="options[email_notification][new_comment]" id="email_notification_no" value="1"
-                                       checked>
+                                       @if(old('options.email_notification.new_comment', json_decode($user->setting->email_notification, true)['new_comment'] ?? null) == 1) checked @endif
+                                >
                                 <label class="form-check-label" for="email_notification_new_comment">Notify me of new
                                     comments</label>
                             </div>
@@ -159,7 +168,8 @@
                                 <input type="hidden" name="options[email_notification][new_image]" value="0">
                                 <input class="form-check-input" type="checkbox"
                                        name="options[email_notification][new_image]" id="email_notification_yes" value="1"
-                                       checked>
+                                       @if(old('options.email_notification.new_image', json_decode($user->setting->email_notification, true)['new_image'] ?? null) == 1) checked @endif
+                                >
                                 <label class="form-check-label" for="disable_comments_new_image">Notify me of new images
                                     uploaded</label>
                             </div>

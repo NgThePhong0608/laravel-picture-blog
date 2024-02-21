@@ -45,6 +45,7 @@ class User extends Authenticatable
     public function updateSettings($data)
     {
         $this->updateSocialProfile($data['social']);
+        $this->updateOptions($data['options']);
     }
 
     public function updateSocialProfile($social)
@@ -53,6 +54,11 @@ class User extends Authenticatable
             ['user_id' => $this->id],
             $social
         );
+    }
+
+    public function updateOptions($options)
+    {
+        $this->setting()->update($options);
     }
     public function images(){
         return $this->hasMany(Image::class);
