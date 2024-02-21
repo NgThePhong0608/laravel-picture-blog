@@ -49,11 +49,6 @@ class User extends Authenticatable
 
     public function updateSocialProfile($social)
     {
-//        if ($this->social()->exists()){
-//            $this->social()->update($social);
-//        }else{
-//            $this->social()->create($social);
-//        }
         Social::updateOrCreate(
             ['user_id' => $this->id],
             $social
@@ -75,26 +70,21 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::created(function ($user) {
+            $emailNotificationArray = [
+                "new_comment" => 1,
+                "new_image" => 1
+            ];
+
             $user->setting()->create([
-                "email_notification" => [
-                    "new_comment" => 1,
-                    "new_image" => 1
-                ]
+                "disable_comments" => false,
+                "moderate_comments" => false,
+                "email_notification" => json_encode($emailNotificationArray)
             ]);
         });
     }
 
-//    public function recentSocial(){
-//        return $this->hasOne(Social::class)->latestOfMany();
-//    }
-//
-//    public function oldestSocial(){
-//        return $this->hasOne(Social::class)->oldestOfMany();
-//    }
-//
-//    public function socialPriority(){
-//        return $this->hasOne(Social::class)->ofMany('priority', 'max');
-//    }
+
+
 
     public function getImagesCount()
     {
