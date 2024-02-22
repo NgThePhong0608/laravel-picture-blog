@@ -7,7 +7,7 @@
                 </div>
 
 {{--                @include('image._related-images')--}}
-{{--                @include('image._comment')--}}
+                @include('_comments')
             </div>
             <div class="col-md-3">
                 <div class="d-flex align-items-center mb-3">

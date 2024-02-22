@@ -99,7 +99,7 @@
             crossorigin="anonymous"></script>
     <script>
         Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-            var msnry = new Masonry('.image-grid');
+            var msnry = new Masonry('.grid');
             msnry.layout();
         });
     </script>
