@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UpdateSettingRequest extends FormRequest
 {
@@ -36,6 +38,12 @@ class UpdateSettingRequest extends FormRequest
             'user.city' => 'nullable|string',
             'user.country' => 'nullable|string',
             'user.about_me' => 'nullable|string',
+            'account.email' => ['required', 'email', Rule::unique('users', 'email')->ignore(auth()->id())],
+            'account.password' => [
+                Rule::requiredIf($this->account['email'] !== auth()->user()->email || !empty($this->account['new_password']),)
+            ],
+            'account.new_password' => 'confirmed'
+
         ];
     }
 
@@ -53,6 +61,9 @@ class UpdateSettingRequest extends FormRequest
             'user.city' => 'city',
             'user.country' => 'country',
             'user.about_me' => 'about me',
+            'account.email' => 'email',
+            'account.password' => 'password',
+            'account.new_password' => 'new password'
         ];
     }
 
@@ -70,6 +81,15 @@ class UpdateSettingRequest extends FormRequest
         if ($this->hasFile('user.cover_image')){
             $data['user']['cover_image'] = $this->file('user.cover_image')->store($directory);
         }
+
+        if (!empty($data['account']['password'])){
+            $data['user']['email'] = $data['account']['email'];
+        }
+
+        if (!empty($data['account']['new_password'])){
+            $data['user']['password'] = Hash::make($data['account']['new_password']);
+        }
+        unset($data['account']);
 
         return $data;
     }
