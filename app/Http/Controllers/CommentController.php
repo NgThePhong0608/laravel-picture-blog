@@ -54,4 +54,10 @@ class CommentController extends Controller
 
         return compact('approvement', 'message');
     }
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+
+        return back()->with('message', "Comment has been removed.");
+    }
 }
