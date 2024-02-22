@@ -6,7 +6,6 @@ use App\Enum\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
