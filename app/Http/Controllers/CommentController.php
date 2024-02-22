@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateCommentRequest;
+use App\Models\Comment;
+use App\Models\Image;
 
 class CommentController extends Controller
 {
@@ -11,6 +13,15 @@ class CommentController extends Controller
         $this->middleware(['auth']);
     }
 
+    public function index()
+    {
+        $comments = Comment::forUser(auth()->user())
+            ->with(['user', 'image'])
+            ->latest()
+            ->paginate(10);
+
+        return view('comments.index', compact('comments'));
+    }
     public function store(Image $image, CreateCommentRequest $request)
     {
         $moderateComments = $this->moderateComments($image);
