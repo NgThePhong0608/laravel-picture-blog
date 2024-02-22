@@ -118,6 +118,11 @@ class User extends Authenticatable
         return $this->hasOne(Setting::class)->withDefault();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     protected static function booted()
     {
         static::created(function ($user) {
